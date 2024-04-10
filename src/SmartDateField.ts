@@ -161,7 +161,11 @@ export const SmartDateField = makeField<
       localeCast,
       StringChainCast((val: string | Date): Nullable<Date> => {
         if (typeof val === 'string') {
-          const parsed = parse(val, extraParseString, new Date())
+          let parsed = parse(val, extraParseString, new Date())
+          const currentYear = new Date().getFullYear()
+          if (parsed.getFullYear() > currentYear + 10) {
+            parsed.setFullYear(parsed.getFullYear() - 100)
+          }
           const reformatted = format(parsed, 'yyyy-MM-dd')
           const final = ChronoDateCast(reformatted)
           return final
