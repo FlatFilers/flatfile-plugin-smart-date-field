@@ -104,6 +104,22 @@ SmartDateField({extraParseString:"yyyyMMdd"})
 
 Will try to parse all incoming dates normally, if it still can't parse the date, it will try to parse with the parse string. so for the above configured field, the string `'20080302'` parses to `new Date('2008-03-02T00:00:00.000Z')`
 
+
+## Using `maxFutureYears`
+
+In certain situations, parsed dates may inadvertently be set far into the future due to the nature of date parsing, where the year of the date being parsed is ambiguously ahead of the current year. The `maxFutureYears` option allows for limiting how far into the future a date can be parsed before being considered too speculative and adjusted accordingly.
+
+### Configuration Example
+
+```javascript
+SmartDateField({maxFutureYears: 20})
+
+```
+
+The maxFutureYears option specifies the maximum number of years into the future a date can be from the current year before it's automatically adjusted. For example, if maxFutureYears is set to 20, any date that results in a year more than 20 years ahead of the current year will be adjusted to be 100 years in the past.
+
+The maxFutureYears default is 10 years.
+
 ## Supported date formats
 
 SmartDateField will parse the following formats with no configuration out of the box.
