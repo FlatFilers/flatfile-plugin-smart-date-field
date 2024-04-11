@@ -118,7 +118,7 @@ SmartDateField({maxFutureYears: 20})
 
 The maxFutureYears option specifies the maximum number of years into the future a date can be from the current year before it's automatically adjusted. For example, if maxFutureYears is set to 20, any date that results in a year more than 20 years ahead of the current year will be adjusted to be 100 years in the past.
 
-THe maxFutureYears default is 10 years.
+The maxFutureYears default is 10 years.
 
 ## Supported date formats
 
