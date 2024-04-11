@@ -128,18 +128,19 @@ const egressDebug = (field: Field<any>, castVal: any) => {
 
 export const SmartDateField = makeField<
   Date,
-  { formatString?: string; extraParseString?: string; locale?: Locales }
+  { formatString?: string; extraParseString?: string; locale?: Locales; maxFutureYears?: number }
 >(DateField({}), {}, (mergedOpts, passedOptions) => {
   const defaultedPassedOptions = {
     ...{
       formatString: "yyyy-MM-dd'T'HH:mm'Z'",
       extraParseString: undefined,
       locale: 'en',
+      maxFutureYears: 10,
     },
     ...passedOptions,
   }
 
-  const { formatString, extraParseString, locale } = defaultedPassedOptions
+  const { formatString, extraParseString, locale, maxFutureYears } = defaultedPassedOptions
 
   if (_.keys(passedOptions).includes('cast')) {
     throw new Error(
@@ -163,7 +164,7 @@ export const SmartDateField = makeField<
         if (typeof val === 'string') {
           let parsed = parse(val, extraParseString, new Date())
           const currentYear = new Date().getFullYear()
-          if (parsed.getFullYear() > currentYear + 10) {
+          if (parsed.getFullYear() > currentYear + maxFutureYears) {
             parsed.setFullYear(parsed.getFullYear() - 100)
           }
           const reformatted = format(parsed, 'yyyy-MM-dd')

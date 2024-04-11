@@ -471,7 +471,13 @@ describe('Cast Function tests ->', () => {
       new Date('2008-03-02T00:00:00.000Z')
     )
   })
-  test('two year date parsing defaults to previous century if date would be more than 10 years out ', () => {
+  test('maxFutureYears', () => {
+    const df = SmartDateField({ extraParseString: 'MMddyy', maxFutureYears: 100 })
+    expect(df.options.cast('010160')).toStrictEqual(
+      new Date('2060-01-01T00:00:00.000Z')
+    )
+  })
+  test('maxFutureYears defaults to ten years out', () => {
     const df = SmartDateField({ extraParseString: 'MMddyy' })
     expect(df.options.cast('010160')).toStrictEqual(
       new Date('1960-01-01T00:00:00.000Z')
